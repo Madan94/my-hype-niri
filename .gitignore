@@ -1,0 +1,14 @@
+.git/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+.claude/
+.agents/
+.codex/
+plans/
+
+niri/outputs.kdl
+__pycache__/
