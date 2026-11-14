@@ -1,0 +1,178 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 51,
+  "margin-top": 2,
+  "margin-left": 2,
+  "margin-right": 2,
+  "spacing": 0,
+  "reload_style_on_change": true,
+
+  "modules-left": [
+    "custom/launcher",
+    "group/cpu-group",
+    "group/mem-group",
+    "group/temp-group",
+    "custom/caffeine",
+    "custom/power-profile"
+  ],
+  "modules-center": ["niri/workspaces"],
+  "modules-right": [
+    "clock",
+    "pulseaudio#microphone",
+    "pulseaudio",
+    "backlight",
+    "battery",
+    "group/connectivity",
+    "custom/power"
+  ],
+
+  "custom/launcher": {
+    "format": "󰣇",
+    "tooltip": false,
+    "on-click": "fuzzel"
+  },
+
+  "niri/workspaces": {
+    "format": "{index}"
+  },
+
+  "custom/caffeine": {
+    "exec": "~/.config/scripts/caffeine-control.sh",
+    "return-type": "json",
+    "interval": "once",
+    "format": "{}",
+    "on-click": "~/.config/scripts/caffeine-control.sh toggle",
+    "signal": 15
+  },
+  "custom/power-profile": {
+    "exec": "~/.config/scripts/power-profile.sh",
+    "return-type": "json",
+    "interval": "once",
+    "format": "{icon}",
+    "format-icons": ["󰾆", "󰾅", "󰓅"],
+    "on-click": "~/.config/scripts/power-profile.sh menu",
+    "signal": 16
+  },
+
+  "clock": {
+    "interval": 30,
+    "format": "<span line_height='0.8'>{:%H:%M<span size='1pt'>\n</span><span size='9pt' color='#aaaaaa'>%A, %d/%m</span>}</span>",
+    "tooltip-format": "<big>{:%A, %B %d}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+
+  "group/cpu-group": {
+    "orientation": "inherit",
+    "modules": ["cpu", "custom/cpu-label"]
+  },
+  "custom/cpu-label": {
+    "format": "cpu"
+  },
+  "cpu": {
+    "interval": 3,
+    "format": "{usage}%",
+    "tooltip-format": "CPU load: {usage}%",
+    "align": 0.5
+  },
+
+  "group/mem-group": {
+    "orientation": "inherit",
+    "modules": ["memory", "custom/mem-label"]
+  },
+  "custom/mem-label": {
+    "format": "ram"
+  },
+  "memory": {
+    "interval": 5,
+    "format": "{used:0.0f}G",
+    "tooltip-format": "{used:0.1f}GB / {total:0.1f}GB used ({percentage}%)",
+    "align": 0.5
+  },
+  "group/temp-group": {
+    "orientation": "inherit",
+    "modules": ["custom/temperature", "custom/temp-label"]
+  },
+  "custom/temp-label": {
+    "format": "temp"
+  },
+  "custom/temperature": {
+    "exec": "~/.config/scripts/temperature-control.sh",
+    "return-type": "json",
+    "interval": 5,
+    "format": "{text}",
+    "align": 0.5
+  },
+
+  "backlight": {
+    "format": "{icon}  {percent}%",
+    "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"],
+    "tooltip-format": "Brightness: {percent}%",
+    "on-scroll-up": "~/.config/scripts/brightness-control.sh up",
+    "on-scroll-down": "~/.config/scripts/brightness-control.sh down"
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  },
+
+  "group/connectivity": {
+    "orientation": "horizontal",
+    "modules": ["tray", "image#stealth"]
+  },
+  "image#stealth": {
+    "exec": "~/.config/scripts/stealth-indicator.sh",
+    "interval": 10,
+    "size": 16
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "󰝟",
+    "format-icons": {
+      "headphone": "󰋋",
+      "hands-free": "󰋎",
+      "headset": "󰋎",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["󰕿", "󰖀", "󰕾"]
+    },
+    "tooltip": true,
+    "tooltip-format": "Volume: {volume}%",
+    "on-click": "~/.config/scripts/volume-control.sh mute",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "~/.config/scripts/volume-control.sh up",
+    "on-scroll-down": "~/.config/scripts/volume-control.sh down"
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "󰍬",
+    "format-source-muted": "󰍭",
+    "on-click": "~/.config/scripts/mic-control.sh mute",
+    "tooltip": true,
+    "tooltip-format": "{source_desc} | Volume: {source_volume}%"
+  },
+
+  "battery": {
+    "interval": 10,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰚥 {capacity}%",
+    "format-alt": "{icon} {time}",
+    "tooltip-format": "{capacity}% · {timeTo}",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+  },
+
+  "custom/power": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Power Menu",
+    "on-click": "wlogout --protocol layer-shell -b 5 --margin-top 350 --margin-bottom 350 --margin-left 200 --margin-right 300 -l ~/.config/wlogout/layout -C ~/.config/wlogout/style.css",
+    "on-click-right": "wlogout --protocol layer-shell -b 5 --margin-top 350 --margin-bottom 350 --margin-left 200 --margin-right 300 -l ~/.config/wlogout/layout -C ~/.config/wlogout/style.css"
+  }
+}
