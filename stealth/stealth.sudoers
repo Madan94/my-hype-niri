@@ -1,0 +1,2 @@
+Cmnd_Alias STEALTH_CMDS = /usr/local/bin/stealth, /usr/bin/systemctl start stealth.service, /usr/bin/systemctl stop stealth.service
+Defaults!STEALTH_CMDS !use_pty
